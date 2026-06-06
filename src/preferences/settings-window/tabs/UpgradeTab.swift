@@ -96,6 +96,7 @@ class UpgradeTab {
         switch LicenseManager.shared.state {
         case .pro:
             showSections(journey: false, licenseLinks: false)
+            if LicenseManager.isSelfBuildPro { proManageTable.isHidden = true }
         case .trialNotStarted:
             showSections(journey: false, licenseLinks: true)
         case .trial, .proExpired, .trialExpired:

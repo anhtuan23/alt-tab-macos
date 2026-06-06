@@ -177,9 +177,14 @@ final class UpgradeButton: ProGradientButton {
             applyTitle(secondary: trialSubtitle(state), main: Self.attributed(NSLocalizedString("Get Pro", comment: ""), Self.mainFont), height: Self.twoLineHeight)
             return
         }
-        let title = LicenseManager.shared.isLifetimeVariant
-            ? NSLocalizedString("Pro Lifetime activated", comment: "")
-            : NSLocalizedString("Pro activated", comment: "")
+        let title: String
+        if LicenseManager.isSelfBuildPro {
+            title = NSLocalizedString("Self-built Pro enabled", comment: "")
+        } else if LicenseManager.shared.isLifetimeVariant {
+            title = NSLocalizedString("Pro Lifetime activated", comment: "")
+        } else {
+            title = NSLocalizedString("Pro activated", comment: "")
+        }
         guard let email = LicenseManager.shared.customerEmail else {
             toolTip = nil
             applyTitle(secondary: nil, main: Self.attributed(title, Self.mainFont), height: Self.oneLineHeight)

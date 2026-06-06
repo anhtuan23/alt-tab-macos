@@ -36,6 +36,13 @@ class LicenseManager {
     /// Maps version-limited variant slugs to their max supported version.
     /// When a Pro variant needs a cutoff, add: "variant_slug": "X.Y.Z".
     static let versionLimitedVariants: [String: String] = [:]
+    static var isSelfBuildPro: Bool {
+        #if SELF_BUILD_PRO
+        return true
+        #else
+        return false
+        #endif
+    }
 
     let clock: Clock
     let keychain: Keychain
@@ -75,6 +82,7 @@ class LicenseManager {
         #if DEBUG
         if hasMockedLicense { return mockedCustomerEmail }
         #endif
+        guard !Self.isSelfBuildPro else { return nil }
         return defaults.string(forKey: Self.customerEmailKey)
     }
 
@@ -253,6 +261,7 @@ class LicenseManager {
     }
 
     func computeState() -> LicenseState {
+        if Self.isSelfBuildPro { return .pro }
         #if DEBUG
         if hasMockedLicense { return mockedTrialStartDate.map(trialState) ?? state }
         #endif
@@ -283,6 +292,7 @@ class LicenseManager {
     }
 
     func scheduleAsyncRevalidationIfNeeded() {
+        if Self.isSelfBuildPro { return }
         let lastValidation = defaults.double(forKey: "lastValidation")
         let elapsed = clock.now.timeIntervalSince1970 - lastValidation
         guard elapsed >= Self.revalidationInterval else { return }
