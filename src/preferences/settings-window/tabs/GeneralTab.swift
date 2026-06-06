@@ -97,6 +97,7 @@ class GeneralTab {
     }
 
     @objc static func checkForUpdatesNow(_ sender: Any?) {
+        guard !LicenseManager.isSelfBuildPro else { return }
         // The updater is lazy-started 30s after launch; if the user presses this button before
         // then, defensively start it first (idempotent — second call is a no-op).
         App.updaterController?.startUpdater()

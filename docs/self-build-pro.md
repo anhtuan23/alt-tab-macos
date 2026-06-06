@@ -35,6 +35,8 @@ DerivedData/Build/Products/Release/AltTab.app
 
 The script builds the Release scheme with `SELF_BUILD_PRO`, then signs the final app with `Local Self-Signed`.
 
+Self-built Pro disables Sparkle startup. That means automatic update checks, automatic downloads/installs, and manual update checks do not run in this build.
+
 ## Verify
 
 ```bash
@@ -61,5 +63,3 @@ Recommended manual flow:
 5. Launch AltTab from `/Applications`.
 
 Because the self-built app is signed by `Local Self-Signed` instead of the official Developer ID, macOS may treat it as a different security identity. You may need to re-grant Accessibility, Screen Recording, or Login Item permissions in System Settings. Existing preferences should remain because the bundle identifier is unchanged.
-
-Sparkle updates can replace the self-built app with an official build. If that happens, rebuild and reinstall this version.
