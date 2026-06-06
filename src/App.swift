@@ -625,7 +625,9 @@ class App: AppCenterApplication {
 
 extension App: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        App.appCenterDelegate = AppCenterCrash()
+        if !LicenseManager.isSelfBuildPro {
+            App.appCenterDelegate = AppCenterCrash()
+        }
         App.shared.disableRelaunchOnLogin()
         Logger.initialize()
         MainThreadStall.observe()

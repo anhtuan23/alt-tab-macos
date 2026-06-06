@@ -8,6 +8,8 @@ xcodebuild \
   -configuration Release \
   -derivedDataPath DerivedData \
   SWIFT_ACTIVE_COMPILATION_CONDITIONS=SELF_BUILD_PRO \
+  CURRENT_PROJECT_VERSION=1 \
+  MARKETING_VERSION=1.0 \
   CODE_SIGNING_ALLOWED=NO \
   CODE_SIGN_IDENTITY="Local Self-Signed"
 
